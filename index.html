@@ -83,8 +83,8 @@
             .then(csvData => {
               Papa.parse(csvData, {
                 complete: function(results) {
-                  data = results.data;
-                  availableQuestions = data.slice(1).map((_, index) => index); // Skip the first row (header)
+                  data = results.data.slice(1); // Skip the first row (header)
+                  availableQuestions = data.map((_, index) => index); // Populate indexes for all remaining rows
 
                   document.getElementById("currentWordPool").textContent = availableQuestions.length;
                 },
