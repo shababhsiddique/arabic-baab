@@ -122,8 +122,15 @@
     document.getElementById("answerMeaning").textContent = " ";
     document.getElementById("answerBaab").textContent = " ";
 
+    // Randomly decide whether to ask from Maadi or Meaning
+    const questionType = Math.random() < 0.6 ? "Maadi" : "Meaning";
     const question = data[currentQuestionIndex];
-    document.getElementById("answerMaadi").textContent = question[0];
+
+    if (questionType === "Maadi") {
+      document.getElementById("answerMaadi").textContent = question[0]; // Show Maadi as the question
+    } else {
+      document.getElementById("answerMeaning").textContent = question[3]; // Show Meaning as the question
+    }
 
     // Remove the current question from availableQuestions to prevent it from being shown again
     availableQuestions.splice(randomIndex, 1);
@@ -131,6 +138,7 @@
     questionShowing = true;
     document.getElementById("mainButton").textContent = "Show Answer";
   }
+
 
   // Display answer
   function showAnswer() {
