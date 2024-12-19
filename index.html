@@ -116,6 +116,8 @@
     const randomIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestionIndex = availableQuestions[randomIndex];
 
+    console.log("Current index "+currentQuestionIndex);
+
     document.getElementById("answerMaadi").textContent = " ";
     document.getElementById("answerMudari").textContent = " ";
     document.getElementById("answerMasdar").textContent = " ";
@@ -183,6 +185,10 @@
     if (event.code === 'Space') {
       event.preventDefault(); // Prevent scrolling when space is pressed
       document.getElementById("mainButton").click(); // Trigger the main button
+    }
+    if (event.code === 'ArrowLeft') {
+      event.preventDefault(); // Prevent scrolling when space is pressed
+      document.getElementById("askAgainButton").click(); // Trigger the main button
     }
   });
 
