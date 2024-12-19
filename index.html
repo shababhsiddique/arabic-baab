@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verb Question App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 50px;
+    }
+
+
+    #questionCard {
+      margin: 20px auto;
+      width: 300px;
+      text-align: left;
+      border: 1px solid #ddd;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    #questionCard span {
+      font-size: 30px;
+    }
+
+    #answerMeaning{
+      font-size: 22px !important;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #mainButton {
+      font-size: 40px;
+      font-weight: bold;
+      background-color: aquamarine;
+    }
+
+    #askAgainButton {
+      font-weight: bold;
+      background-color: darkorange;
+    }
+  </style>
+</head>
+<body>
+
+<h4>Verb Question Card</h4>
+<p><span id="currentWordPool"></span> left</p>
+
+<div id="questionCard">
+  <p><strong>Maadi:</strong> <span id="answerMaadi"></span></p>
+  <p><strong>Mudari:</strong> <span id="answerMudari"> </span></p>
+  <p><strong>Masdar:</strong> <span id="answerMasdar"> </span></p>
+  <p><strong>Meaning:</strong> <span id="answerMeaning"> </span></p>
+  <p><strong>Baab:</strong> <span id="answerBaab"> </span></p>
+</div>
+
+<button id="mainButton" onclick="generateRandomCard()">Ask Question</button>
+<br/>
+<button id="askAgainButton" onclick="askAgain()">Ask This Again</button>
+<br/>
+<button onclick="refreshPage()">Refresh</button>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script>
+  let questionShowing = false;
+  let data = [];  // Holds the CSV data
+  let availableQuestions = [];  // Holds the indexes of unshown rows
+  let currentQuestionIndex = null;  // Index of the current question
+
+  // Fetch CSV data from 'verbs.csv' file
+  function loadCSV() {
+    fetch('verbs.csv')
+            .then(response => response.text())
+            .then(csvData => {
+              Papa.parse(csvData, {
+                complete: function(results) {
+                  data = results.data;
+                  availableQuestions = data.slice(1).map((_, index) => index); // Skip the first row (header)
+
+                  document.getElementById("currentWordPool").textContent = availableQuestions.length;
+                },
+                header: false
+              });
+            })
+            .catch(error => console.error('Error loading CSV:', error));
+  }
+
+
+  function generateRandomCard(){
+    if(questionShowing !== true){
+      askQuestion();
+    }else{
+      showAnswer();
+    }
+  }
+
+  // Trigger question generation
+  function askQuestion() {
+    if (data.length === 0 || availableQuestions.length === 0) {
+      alert("All questions have been shown or CSV data not loaded yet.");
+      return;
+    }
+
+    document.getElementById("currentWordPool").textContent = availableQuestions.length;
+
+    // Select a random row from the remaining unshown rows
+    const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+    currentQuestionIndex = availableQuestions[randomIndex];
+
+    document.getElementById("answerMaadi").textContent = " ";
+    document.getElementById("answerMudari").textContent = " ";
+    document.getElementById("answerMasdar").textContent = " ";
+    document.getElementById("answerMeaning").textContent = " ";
+    document.getElementById("answerBaab").textContent = " ";
+
+    const question = data[currentQuestionIndex];
+    document.getElementById("answerMaadi").textContent = question[0];
+
+    // Remove the current question from availableQuestions to prevent it from being shown again
+    availableQuestions.splice(randomIndex, 1);
+
+    questionShowing = true;
+    document.getElementById("mainButton").textContent = "Show Answer";
+  }
+
+  // Display answer
+  function showAnswer() {
+    if (currentQuestionIndex === null) {
+      alert("No question selected. Please ask a random question first.");
+      return;
+    }
+
+    document.getElementById("currentWordPool").textContent = availableQuestions.length;
+
+    const question = data[currentQuestionIndex];
+    document.getElementById("answerMaadi").textContent = question[0];
+    document.getElementById("answerMudari").textContent = question[1];
+    document.getElementById("answerMasdar").textContent = question[2];
+    document.getElementById("answerMeaning").textContent = question[3];
+    document.getElementById("answerBaab").textContent = question[4];
+
+    questionShowing = false;
+    document.getElementById("mainButton").textContent = "Ask Question";
+  }
+
+  // Re-add the current question to the pool of available questions
+  function askAgain() {
+    if (currentQuestionIndex === null) {
+      alert("No question selected. Please ask a random question first.");
+      return;
+    }
+
+    // Add the current question back to the pool
+    availableQuestions.push(currentQuestionIndex);
+    alert("This question has been added back to the pool.");
+    askQuestion();
+  }
+
+  // Refresh the page
+  function refreshPage() {
+    location.reload(); // Reload the page to reset everything
+  }
+
+  // Handle spacebar for the main button
+  document.addEventListener('keydown', function(event) {
+    if (event.code === 'Space') {
+      event.preventDefault(); // Prevent scrolling when space is pressed
+      document.getElementById("mainButton").click(); // Trigger the main button
+    }
+  });
+
+  // Load the CSV data when the page is loaded
+  window.onload = function() {
+    loadCSV();
+  };
+</script>
+
+</body>
+</html>
