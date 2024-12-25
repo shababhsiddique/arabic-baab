@@ -62,15 +62,16 @@
   <p><strong>Baab:</strong> <span id="answerBaab"> </span></p>
 </div>
 
-<button id="mainButton" onclick="generateRandomCard()">Ask Question</button>
+<button id="mainButton" onclick="generateRandomCard()" disabled>Ask Question</button>
 <br/>
-<button id="askAgainButton" onclick="askAgain()">Ask This Later</button>
+<button id="askAgainButton" onclick="askAgain()" disabled>Ask This Again</button>
 <br/>
 <button onclick="refreshPage()">Refresh</button>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+  let verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=0&single=true&output=csv';
   let questionShowing = false;
   let data = [];  // Holds the CSV data
   let availableQuestions = [];  // Holds the indexes of unshown rows
@@ -78,7 +79,11 @@
 
   // Fetch CSV data from 'verbs.csv' file
   function loadCSV() {
-    fetch('verbs.csv')
+    // Disable buttons while loading
+    document.getElementById("mainButton").disabled = true;
+    document.getElementById("askAgainButton").disabled = true;
+
+    fetch(verbsGoogleSheetCSV)
             .then(response => response.text())
             .then(csvData => {
               Papa.parse(csvData, {
@@ -86,12 +91,20 @@
                   data = results.data.slice(1); // Skip the first row (header)
                   availableQuestions = data.map((_, index) => index); // Populate indexes for all remaining rows
 
+                  // Update the word pool count
                   document.getElementById("currentWordPool").textContent = availableQuestions.length;
+
+                  // Enable buttons once CSV is loaded
+                  document.getElementById("mainButton").disabled = false;
+                  document.getElementById("askAgainButton").disabled = false;
                 },
                 header: false
               });
             })
-            .catch(error => console.error('Error loading CSV:', error));
+            .catch(error => {
+              console.error('Error loading CSV:', error);
+              alert("Failed to load the CSV file. Please try again later.");
+            });
   }
 
 
