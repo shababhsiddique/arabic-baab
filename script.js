@@ -1,5 +1,6 @@
 let verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=0&single=true&output=csv';
-let difficultQuestionCookie;
+//verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=802300851&single=true&output=csv';
+
 let questionShowing = false;
 let data = [];  // Holds the CSV data
 let availableQuestions = [];  // Holds the indexes of unshown rows
@@ -8,6 +9,11 @@ let currentQuestionIndex = null;  // Index of the current question
 // Retrieve `difficult_words` from cookie
 let difficultWords = getCookie('difficult_words') || [];
 let mode = 'all';
+
+function isDifficultOnlyMode() {
+    const checkbox = document.getElementById('difficultOnlyCheckbox');
+    return checkbox && checkbox.checked;
+}
 
 // Fetch CSV data from 'verbs.csv' file
 function loadCSV(source) {
@@ -145,6 +151,21 @@ function askAgain() {
     askQuestion();
 }
 
+function removeFromDifficult(){
+    const difficultWords = getCookie('difficult_words');
+    const wordIndex = difficultWords.findIndex(
+        word => word[0] === data[currentQuestionIndex][0]
+    );
+
+    if (wordIndex > -1) {
+        // Remove the word and update the cookie
+        difficultWords.splice(wordIndex, 1);
+        document.cookie = `difficult_words=${JSON.stringify(difficultWords)}; path=/;`;
+
+        alert(`Removed "${data[currentQuestionIndex][0]}" from difficult words.`);
+    }
+}
+
 
 // Function to set a cookie
 function setCookie(name, value, days) {
@@ -211,8 +232,10 @@ function toggleDifficultOnly() {
     document.getElementById("askAgainButton").disabled = true;
     const checkbox = document.getElementById('difficultOnlyCheckbox');
     if (checkbox.checked) {
+        document.getElementById('removeWordButton').style.display = 'inline';
         loadCSV('diff');
     } else {
+        document.getElementById('removeWordButton').style.display = 'none';
         loadCSV();
     }
 }
