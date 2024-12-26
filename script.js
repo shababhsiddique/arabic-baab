@@ -24,6 +24,7 @@ function loadCSV(source) {
         // Enable buttons
         document.getElementById("mainButton").disabled = false;
         document.getElementById("askAgainButton").disabled = false;
+        askQuestion();
 
         console.log("Using difficult words as data source.");
     } else {
@@ -41,6 +42,7 @@ function loadCSV(source) {
                         // Enable buttons once CSV is loaded
                         document.getElementById("mainButton").disabled = false;
                         document.getElementById("askAgainButton").disabled = false;
+                        askQuestion();
                     },
                     header: false
                 });
@@ -50,6 +52,7 @@ function loadCSV(source) {
                 alert("Failed to load the CSV file. Please try again later.");
             });
     }
+
 }
 
 
@@ -173,6 +176,11 @@ function addToDifficultWords() {
     const question = data[currentQuestionIndex];
     difficultWords.push(question);
     setCookie('difficult_words', difficultWords, 30); // Save to cookie for 30 days
+
+    //enable checkbox if some at least 1 word added
+    if(difficultWords.length > 0){
+        document.getElementById('difficultOnlyCheckbox').disabled = false;
+    }
 }
 
 // Function to display the difficult words list (Optional)
@@ -203,6 +211,60 @@ function toggleDifficultOnly() {
         loadCSV();
     }
 }
+function downloadDifficultWords() {
+    const rawCookieValue = getCookie('difficult_words');
+
+    // If the cookie value is already an array, use it directly
+    if (!rawCookieValue || !Array.isArray(rawCookieValue)) {
+        alert('No valid difficult words to download.');
+        return;
+    }
+
+    // Convert the array into a CSV format
+    const csvContent = 'data:text/csv;charset=utf-8,' +
+        ['Fi\'l (Verb),Mudari,Masdar,Meaning (in Bengali),Baab']
+            .concat(rawCookieValue.map(row => row.join(',')))
+            .join('\n');
+
+    // Create a downloadable link for the CSV content
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'difficult_words.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function clearIncorrectWords() {
+    // Get all cookies
+    const cookies = document.cookie.split(";");
+
+    // Look for 'difficult_words' specifically
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("difficult_words=")) {
+            // Clear the 'difficult_words' cookie
+            document.cookie = "difficult_words=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            alert("The 'difficult_words' list has been cleared.");
+
+            document.getElementById('difficultOnlyCheckbox').checked = false;
+            document.getElementById('difficultOnlyCheckbox').disabled = true;
+            loadCSV();
+            return;
+        }
+    }
+
+    // If no cookie found
+    alert("'difficult_words' cookie not found.");
+
+}
+
+
+
+
+
+
 
 // Handle spacebar for the main button
 document.addEventListener('keydown', function(event) {

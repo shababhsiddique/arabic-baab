@@ -23,18 +23,28 @@
   <p><strong>Baab:</strong> <span id="answerBaab"> </span></p>
 </div>
 
-<div id="buttonContainer">
+<div class="buttonContainer">
   <button id="mainButton" onclick="generateRandomCard()" disabled>Ask Word</button>
   <button id="askAgainButton" onclick="askAgain()" disabled>Ask Later</button>
 </div>
-<br/>
-<button onclick="refreshPage()">Refresh</button>
+
+<div class="optionButtons">
+  <button onclick="refreshPage()">Refresh</button>
+  <button onclick="downloadDifficultWords()">Download Your Common Mistakes</button>
+  <button onclick="clearIncorrectWords()">Clear Incorrect List</button>
+</div>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script src="script.js"></script>
 <script>
 
   document.getElementById('difficultOnlyCheckbox').checked = false;
+
+  if(difficultWords.length === 0){
+    document.getElementById('difficultOnlyCheckbox').disabled = true;
+  }
 
   // Initial load
   window.onload = function () {

@@ -45,7 +45,7 @@ button {
     background-color: orange;
 }
 
-#buttonContainer {
+.buttonContainer {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -59,4 +59,10 @@ button {
 
 .checkbox_label {
     font-size: 16px;
+}
+
+.optionButtons button {
+    font-size: 14px;
+    padding: 3px 10px;
+    margin-top: 15px;
 }
