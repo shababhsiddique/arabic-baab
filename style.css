@@ -50,3 +50,13 @@ button {
     justify-content: center;
     gap: 10px;
 }
+
+#mainButton:disabled, #askAgainButton:disabled,
+#mainButton[disabled], #askAgainButton[disabled]{
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.checkbox_label {
+    font-size: 16px;
+}

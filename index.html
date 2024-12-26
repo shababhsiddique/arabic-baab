@@ -4,12 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verb Question App</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h4>Verb Question Card</h4>
 <p><span id="currentWordPool"></span> left</p>
+<div>
+  <input type="checkbox" id="difficultOnlyCheckbox" onclick="toggleDifficultOnly()">
+  <label class="checkbox_label" for="difficultOnlyCheckbox">Show Difficult Only</label>
+</div>
 
 <div id="questionCard">
   <p><strong>Maadi:</strong> <span id="answerMaadi"></span></p>
@@ -23,17 +27,18 @@
   <button id="mainButton" onclick="generateRandomCard()" disabled>Ask Word</button>
   <button id="askAgainButton" onclick="askAgain()" disabled>Ask Later</button>
 </div>
-
 <br/>
 <button onclick="refreshPage()">Refresh</button>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="script.js"></script>
 <script>
-  // Load the CSV data when the page is loaded
-  window.onload = function() {
-    //diff or all
-    loadCSV('all');
+
+  document.getElementById('difficultOnlyCheckbox').checked = false;
+
+  // Initial load
+  window.onload = function () {
+    loadCSV();
   };
 </script>
 

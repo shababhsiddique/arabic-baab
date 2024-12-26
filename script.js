@@ -193,6 +193,17 @@ function refreshPage() {
     location.reload(); // Reload the page to reset everything
 }
 
+function toggleDifficultOnly() {
+    document.getElementById("mainButton").disabled = true;
+    document.getElementById("askAgainButton").disabled = true;
+    const checkbox = document.getElementById('difficultOnlyCheckbox');
+    if (checkbox.checked) {
+        loadCSV('diff');
+    } else {
+        loadCSV();
+    }
+}
+
 // Handle spacebar for the main button
 document.addEventListener('keydown', function(event) {
     if (event.code === 'Space') {
