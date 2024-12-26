@@ -28,11 +28,14 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+button{
+ border: none;
+}
 
 #mainButton {
     font-size: 30px;
     font-weight: bold;
-    background-color: aquamarine;
+    background-color: #00D1D1;
     margin: 1px;
     width: 240px;
 }
@@ -42,7 +45,7 @@ button {
     font-weight: bold;
     width: 185px;
     margin: 1px;
-    background-color: orange;
+    background-color: #FCAE1E;
 }
 
 .buttonContainer {

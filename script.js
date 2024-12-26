@@ -66,8 +66,13 @@ function generateRandomCard(){
 
 // Trigger question generation
 function askQuestion() {
-    if (data.length === 0 || availableQuestions.length === 0) {
-        alert("All questions have been shown or CSV data not loaded yet.");
+    if (data.length === 0) {
+        alert("CSV data not loaded yet.");
+        return;
+    }
+
+    if (availableQuestions.length === 0) {
+        alert("Congratulation you reached the end.");
         return;
     }
 
