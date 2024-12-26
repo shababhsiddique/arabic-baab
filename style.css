@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+#questionCard {
+    margin: 20px auto;
+    width: 300px;
+    text-align: left;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+#questionCard span {
+    font-size: 30px;
+}
+
+#answerMeaning {
+    font-size: 22px !important;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#mainButton {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: aquamarine;
+    margin: 1px;
+    width: 240px;
+}
+
+#askAgainButton {
+    font-size: 30px;
+    font-weight: bold;
+    width: 185px;
+    margin: 1px;
+    background-color: orange;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
