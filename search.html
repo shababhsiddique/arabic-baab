@@ -4,48 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Verb Search</title>
-	<style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            font-size: 20px;
-            margin-top: 50px;
-        }
-
-        #searchCard {
-            margin: 20px auto;
-            width: 300px;
-            text-align: left;
-            border: 1px solid #ddd;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-
-        #searchCard span {
-            font-size: 30px;
-        }
-
-        #searchResult {
-            display: none;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            font-size: 18px;
-            margin: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        #searchButton {
-            font-weight: bold;
-            background-color: aquamarine;
-        }
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -63,6 +22,10 @@
 
 <p id="searchResult" style="color: red; font-weight: bold;">No match found!</p>
 
+<div class="optionButtons">
+	<a href="index.html"><button>Practice</button></a>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
     let verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=0&single=true&output=csv';
@@ -79,9 +42,9 @@
             .then(csvData => {
                 Papa.parse(csvData, {
                     complete: function(results) {
-                        // Normalize the Maadi column (index 0) for all rows
+                        // Normalize the Maadi column (index 0) and store it as a new column
                         data = results.data.slice(1).map(row => {
-                            row[0] = removeDiacritics(row[0]); // Remove harakat from Maadi column
+                            row.push(removeDiacritics(row[0])); // Add diacritic-less Maadi as the last column
                             return row;
                         });
                     },
@@ -91,10 +54,11 @@
             .catch(error => console.error('Error loading CSV:', error));
     }
 
+
     // Search for a verb in the CSV data
     function searchVerb() {
         const searchValue = removeDiacritics(document.getElementById("searchInput").value.trim());
-        const result = data.find(row => removeDiacritics(row[0]) === searchValue); // Match normalized Maadi
+        const result = data.find(row => row[row.length - 1] === searchValue); // Use normalized column for matching
 
         if (result) {
             // Display the result
@@ -112,6 +76,7 @@
             document.getElementById("searchResult").style.display = "block";
         }
     }
+
 
     // Load the CSV data when the page is loaded
     window.onload = function() {

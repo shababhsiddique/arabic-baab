@@ -7,7 +7,7 @@ body {
 
 #questionCard {
     margin: 20px auto;
-    width: 300px;
+    width: 380px;
     text-align: left;
     border: 1px solid #ddd;
     padding: 20px;
@@ -16,6 +16,13 @@ body {
 
 #questionCard span {
     font-size: 30px;
+}
+
+#questionCard #questionSpan{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
 }
 
 #answerMeaning {
@@ -33,19 +40,19 @@ button{
 }
 
 #mainButton {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     background-color: #00D1D1;
     margin: 1px;
-    width: 240px;
+    width: 228px;
 }
 
 #askAgainButton {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
-    width: 185px;
-    margin: 1px;
+    width: 180px;
     background-color: #FCAE1E;
+    margin: 1px;
 }
 
 .buttonContainer {
@@ -68,4 +75,35 @@ button{
     font-size: 14px;
     padding: 3px 10px;
     margin-top: 15px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+#searchCard {
+    margin: 20px auto;
+    width: 300px;
+    text-align: left;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+#searchCard span {
+    font-size: 30px;
+}
+
+#searchResult {
+    display: none;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 18px;
+    margin: 10px;
+}
+
+#searchButton {
+    font-weight: bold;
+    font-size: 19px;
+    background-color: aquamarine;
 }

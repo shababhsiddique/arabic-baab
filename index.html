@@ -10,12 +10,9 @@
 
 <h4>Verb Question Card</h4>
 <p><span id="currentWordPool"></span> left</p>
-<div>
-  <input type="checkbox" id="difficultOnlyCheckbox" onclick="toggleDifficultOnly()">
-  <label class="checkbox_label" for="difficultOnlyCheckbox">Show Difficult Only</label>
-</div>
 
 <div id="questionCard">
+  <span id="questionSpan">Question Word</span>
   <p><strong>Maadi:</strong> <span id="answerMaadi"></span></p>
   <p><strong>Mudari:</strong> <span id="answerMudari"> </span></p>
   <p><strong>Masdar:</strong> <span id="answerMasdar"> </span></p>
@@ -31,9 +28,16 @@
 <div class="optionButtons">
   <button onclick="refreshPage()">Refresh</button>
   <button id="removeWordButton" style="display: none" onclick="removeFromDifficult()">Remove This Word</button>
-  <button onclick="downloadDifficultWords()">Download Your Common Mistakes</button>
+  <button onclick="downloadDifficultWords()">Download Your Mistakes</button>
   <button onclick="clearIncorrectWords()">Clear Incorrect List</button>
+  <a href="search.html"><button>Search Words</button></a>
 </div>
+<div>
+  <input type="checkbox" id="difficultOnlyCheckbox" onclick="toggleDifficultOnly()">
+  <label class="checkbox_label" for="difficultOnlyCheckbox">Show Mistakes Only</label>
+</div>
+
+
 
 
 
