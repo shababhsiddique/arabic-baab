@@ -7,11 +7,20 @@ body {
 
 #questionCard {
     margin: 20px auto;
-    width: 380px;
+    width: 420px;
+    max-width: 100%; /* Ensures it doesn't exceed 100% of the container */
     text-align: left;
     border: 1px solid #ddd;
     padding: 20px;
     background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+/* Add media query for mobile devices */
+@media (max-width: 768px) {
+    #questionCard {
+        width: 100%; /* Full width for mobile */
+
+    }
 }
 
 #questionCard span {
@@ -44,13 +53,13 @@ button{
     font-weight: bold;
     background-color: #00D1D1;
     margin: 1px;
-    width: 228px;
+    width: 230px;
 }
 
 #askAgainButton {
     font-size: 28px;
     font-weight: bold;
-    width: 180px;
+    width: 190px;
     background-color: #FCAE1E;
     margin: 1px;
 }
@@ -58,7 +67,6 @@ button{
 .buttonContainer {
     display: flex;
     justify-content: center;
-    gap: 10px;
 }
 
 #mainButton:disabled, #askAgainButton:disabled,
@@ -81,11 +89,20 @@ button{
 
 #searchCard {
     margin: 20px auto;
-    width: 380px;
+    width: 420px;
+    max-width: 100%;
     text-align: left;
     border: 1px solid #ddd;
     padding: 20px;
     background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+/* Add media query for mobile devices */
+@media (max-width: 768px) {
+    #searchCard {
+        width: 100%; /* Full width for mobile */
+
+    }
 }
 
 #searchCard span {
