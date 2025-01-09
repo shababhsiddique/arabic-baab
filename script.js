@@ -98,16 +98,13 @@ function askQuestion() {
 
     // Randomly decide whether to ask from Maadi or Meaning
     //const questionType = Math.random() < 0.6 ? "Maadi" : "Meaning";
-    const questionRandomIndex = Math.floor(Math.random() * 4);
+    var questionRandomIndex = Math.floor(Math.random() * 4);
+    if(questionRandomIndex === 2){
+        questionRandomIndex = 0;
+    }
     const question = data[currentQuestionIndex];
 
     document.getElementById("questionSpan").textContent = question[questionRandomIndex]; // Show Maadi as the question
-
-    /*if (questionType === "Maadi") {
-        document.getElementById("questionSpan").textContent = question[0]; // Show Maadi as the question
-    } else {
-        document.getElementById("questionSpan").textContent = question[3]; // Show Meaning as the question
-    }*/
 
     // Remove the current question from availableQuestions to prevent it from being shown again
     availableQuestions.splice(randomIndex, 1);
