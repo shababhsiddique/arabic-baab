@@ -25,21 +25,45 @@
   <button id="askAgainButton" onclick="askAgain()" disabled>Ask Later</button>
 </div>
 
+
+<!-- Modal Structure -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <span>More Options</span>
+    <div class="modal-buttons">
+      <div class="optionButtons">
+        <button onclick="refreshPage()">Refresh</button>
+
+        <button onclick="downloadDifficultWords()">Download Your Mistakes</button>
+        <button onclick="clearIncorrectWords()">Clear Incorrect List</button>
+      </div>
+
+      <div>
+        <input type="checkbox" id="difficultOnlyCheckbox" onclick="toggleDifficultOnly()">
+        <label class="checkbox_label" for="difficultOnlyCheckbox">Show Mistakes Only</label>
+      </div>
+
+      <div>Filter Baabs---</div>
+      <div>
+        <input type="radio" id="3letterBaabs" name="fav_language" value="3letterBaabs"  onclick="toggleBaabFilter(1)">
+        <label for="3letterBaabs">فَتَحَ,نَصَرَ,سَمِعَ,كَرُمَ,ضَرَبَ</label><br>
+        <input type="radio" id="الاِفْعَالِ" name="fav_language" value="الاِفْعَالِ" onclick="toggleBaabFilter(2)">
+        <label for="الاِفْعَالِ">الاِفْعَالِ</label><br>
+        <input type="radio" id="اَلْمُفَاعَلَةُ" name="fav_language" value="اَلْمُفَاعَلَةُ" onclick="toggleBaabFilter(3)">
+        <label for="اَلْمُفَاعَلَةُ">اَلْمُفَاعَلَةُ</label>
+        <input type="radio" id="combined" name="fav_language" value="combined" onclick="toggleBaabFilter(4)">
+        <label for="combined">All Combined</label>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="optionButtons">
-  <button onclick="refreshPage()">Refresh</button>
   <button id="removeWordButton" style="display: none" onclick="removeFromDifficult()">Remove This Word</button>
-  <button onclick="downloadDifficultWords()">Download Your Mistakes</button>
-  <button onclick="clearIncorrectWords()">Clear Incorrect List</button>
+  <button id="openModalButton" class="btn btn-info">Options</button>
   <a href="search.html"><button>Search Words</button></a>
 </div>
-<div>
-  <input type="checkbox" id="difficultOnlyCheckbox" onclick="toggleDifficultOnly()">
-  <label class="checkbox_label" for="difficultOnlyCheckbox">Show Mistakes Only</label>
-</div>
-
-
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script src="script.js"></script>
@@ -53,6 +77,7 @@
 
   // Initial load
   window.onload = function () {
+    document.getElementById('3letterBaabs').checked = true; // Set default selection
     loadCSV();
   };
 </script>

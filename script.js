@@ -1,5 +1,29 @@
-let verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=0&single=true&output=csv';
+/*var verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=0&single=true&output=csv';
+
+//baab الاِفْعَالِ
 //verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=802300851&single=true&output=csv';
+
+//baab اَلْمُفَاعَلَةُ
+verbsGoogleSheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=1743383916&single=true&output=csv'
+*/
+const csvLinks = {
+    1: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=0&single=true&output=csv', // 3Letter
+    2: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=802300851&single=true&output=csv', // Ifal
+    3: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=1743383916&single=true&output=csv', // Mufala
+    4: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=728929932&single=true&output=csv' // All combined
+};
+
+let verbsGoogleSheetCSV = csvLinks[1]; // Default to 3Letter link
+
+// Function to toggle CSV based on selected radio button
+function toggleBaabFilter(option) {
+    if (csvLinks[option]) {
+        verbsGoogleSheetCSV = csvLinks[option];
+        console.log(`CSV link updated to: ${verbsGoogleSheetCSV}`);
+        // Reload CSV with the new link
+        loadCSV();
+    }
+}
 
 let questionShowing = false;
 let data = [];  // Holds the CSV data
@@ -34,6 +58,7 @@ function loadCSV(source) {
 
         console.log("Using difficult words as data source.");
     } else {
+        console.log("Using sheet"+verbsGoogleSheetCSV);
         fetch(verbsGoogleSheetCSV)
             .then(response => response.text())
             .then(csvData => {
@@ -306,3 +331,25 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+// Function to open the modal
+function openModal() {
+    document.getElementById("myModal").style.display = "block";
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+}
+
+// Open modal on button click
+document.getElementById("openModalButton").onclick = function() {
+    openModal();
+}
+
+// Close modal when clicking outside the content
+window.onclick = function(event) {
+    const modal = document.getElementById("myModal");
+    if (event.target === modal) {
+        closeModal();
+    }
+}
